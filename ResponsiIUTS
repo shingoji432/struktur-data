@@ -1,0 +1,83 @@
+#include <iostream>
+#include <string>
+#include<bits/stdc++.h>
+#define MAX 25
+
+using namespace std;
+
+string ubahPesan(string);
+int top = -1;
+bool isFull();
+bool isEmpty();
+void push(char oper);
+int pop();
+void cetak();
+string tumpuk;
+
+int main()
+{
+    string pesanAwal;
+    pesanAwal = "HA***L*OAP***A*KAB*A***R";
+    ubahPesan(pesanAwal);
+    return 0;
+}
+
+bool isFull(){
+    if(top == MAX - 1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool isEmpty(){
+    if(top == -1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+void push(char oper)
+{
+    if(!isFull())
+    {
+        tumpuk[top] = oper;
+    }
+}
+
+int pop()
+{
+    if (!isEmpty())
+    {
+        return 1;
+    }
+}
+
+void cetak()
+{
+    for(int k = top; k >=0; k--)
+    {
+        cout << tumpuk[k];
+    }
+}
+
+string ubahPesan(string pesanAwal)
+{
+    reverse(pesanAwal.begin(), pesanAwal.end());
+    for(int i = top; i < MAX; i++)
+    {
+        if(pesanAwal[i] == '*')
+        {
+            pop();
+        }
+        else
+        {
+            push(pesanAwal[i]);
+            top++;
+        }
+    }
+    cetak();
+}
