@@ -1,0 +1,253 @@
+#include <iostream>
+
+using namespace std;
+
+struct Pln{
+    // data
+    int noPlg, tagihan;
+    string namaPlg;
+    //pointer
+    Pln *next;
+};
+
+Pln *pelanggan, *cur, *head, *hapus, *bantu;
+
+int nmr, tgh, a, c;
+string nm, b;
+
+void init() {
+    head = NULL;
+}
+
+int isEmpty() {
+    if(head == NULL)
+        return 1;
+    else return 0;
+}
+
+void cetak() {
+    if(isEmpty() == 0) {
+        cur = head;
+        cout << "Data Pelanggan\n";
+        cout << endl;
+        while(cur!=NULL) {
+            cout << "No. Pelanggan : " << cur->noPlg << endl;
+            cout << "Nama Pelanggan : " << cur->namaPlg << endl;
+            cout << "Tagihan : " << cur->tagihan << endl;
+            cout << endl;
+            cur =  cur->next;
+        }
+    } else {
+        cout << "Data Kosong\n";
+    }
+    cout << endl;
+    cout << endl;
+}
+
+void buatNode() {
+    cout << "No. Pelanggan : ";
+    cin >> nmr;
+    cout << "Nama Pelanggan : ";
+    cin >> nm;
+    cout << "Tagihan Pelanggan : ";
+    cin >> tgh;
+    cout << endl;
+    pelanggan = new Pln();
+    pelanggan->noPlg = nmr;
+    pelanggan->namaPlg = nm;
+    pelanggan->tagihan = tgh;
+    if (head != NULL) {
+        hapus = head;
+        head = pelanggan;
+        pelanggan->next = hapus->next;
+    } else {
+        pelanggan->next = NULL;
+        head = pelanggan;
+    }
+    cout << "Data Berhasil Masuk!\n";
+    cout << endl;
+    cout << endl;
+}
+
+void tambahDepan() {
+    cout << "No. Pelanggan : ";
+    cin >> nmr;
+    cout << "Nama Pelanggan : ";
+    cin >> nm;
+    cout << "Tagihan Pelanggan : ";
+    cin >> tgh;
+    cout << endl;
+    pelanggan = new Pln();
+    pelanggan->noPlg = nmr;
+    pelanggan->namaPlg = nm;
+    pelanggan->tagihan = tgh;
+    pelanggan->next = NULL;
+    if(isEmpty() == 1) {
+        head = pelanggan;
+        head->next = NULL;
+    } else {
+        pelanggan->next = head;
+        head = pelanggan;
+    }
+    cout << "Data Berhasil Masuk!\n";
+    cout << endl;
+    cout << endl;
+}
+
+void tambahBelakang() {
+
+    cout << "No. Pelanggan : ";
+    cin >> nmr;
+    cout << "Nama Pelanggan : ";
+    cin >> nm;
+    cout << "Tagihan Pelanggan : ";
+    cin >> tgh;
+    cout << endl;
+    pelanggan = new Pln();
+    pelanggan->noPlg = nmr;
+    pelanggan->namaPlg = nm;
+    pelanggan->tagihan = tgh;
+    pelanggan->next = NULL;
+    if(isEmpty() == 1) {
+        head = pelanggan;
+        head->next = NULL;
+    } else {
+        cur = head;
+        while(cur->next!=NULL){
+            cur = cur->next;
+        }
+        cur->next = pelanggan;
+    }
+    cout << "Data Berhasil Masuk!\n";
+    cout << endl;
+    cout << endl;
+}
+
+void hapusDepan() {
+    if (isEmpty() == 0) {
+        if (head->next != NULL) {
+            hapus = head;
+            a = hapus->noPlg;
+            b = hapus->namaPlg;
+            c = hapus->tagihan;
+            head = head->next;
+            delete hapus;
+        } else {
+            a = head->noPlg;
+            b = head->namaPlg;
+            c = head->tagihan;
+            head = NULL;
+        }
+        cout << "Data Terhapus!\n";
+    } else {
+        cout << "Data Masih Kosong\n";
+    }
+    cout << endl;
+    cout << endl;
+}
+
+void hapusBelakang() {
+    if (isEmpty() == 0) {
+        if (head->next != NULL) {
+            bantu = head;
+            while (bantu->next->next != NULL) {
+                bantu = bantu->next;
+            }
+            hapus = bantu->next;
+            a = hapus->noPlg;
+            b = hapus->namaPlg;
+            c = hapus->tagihan;
+            bantu->next = NULL;
+            delete hapus;
+        } else {
+            a = head->noPlg;
+            b = head->namaPlg;
+            c = head->tagihan;
+            head = NULL;
+        }
+        cout << "Data Terhapus!\n";
+    } else {
+        cout << "Data Masih Kosong\n";
+    }
+    cout << endl;
+    cout << endl;
+}
+
+void clear() {
+    if (isEmpty() == 0) {
+        bantu = head;
+        while (bantu != NULL) {
+            hapus = bantu;
+            bantu = bantu->next;
+            delete hapus;
+        }
+        head = NULL;
+        cout << "Data Terhapus!\n";
+    } else {
+        cout << "Data Masih Kosong";
+    }
+    cout << endl;
+    cout << endl;
+}
+
+void menu(int pilih) {
+    switch (pilih) {
+    case 1:
+        buatNode();
+        break;
+    case 2:
+        tambahDepan();
+        break;
+    case 3:
+        tambahBelakang();
+        break;
+    case 4:
+        cetak();
+        break;
+    case 5:
+        hapusDepan();
+        break;
+    case 6:
+        hapusBelakang();
+        break;
+    case 7:
+        clear();
+        break;
+    case 8:
+        cout << "Selesai";
+        break;
+    default:
+        cout << "Invalid!\n";
+        cout << endl;
+    }
+}
+
+int main() {
+    int pilih;
+    bool looping = true;
+    cout << "--- Data Pelanggan PLN ---\n";
+    cout << endl;
+    while (looping) {
+        cout << "1. Buat Node Pelanggan\n";
+        cout << "2. Tambah Node Pelanggan di Depan\n";
+        cout << "3. Tambah Node Pelanggan di Belakang\n";
+        cout << "4. Cetak Daftar Pelanggan\n";
+        cout << "5. Hapus Node Pelanggan di Depan\n";
+        cout << "6. Hapus Node Pelanggan di Belakang\n";
+        cout << "7. Hapus Semua Node\n";
+        cout << "8. Keluar\n";
+        cout << endl;
+        cout << "Pilihan : ";
+        cin >> pilih;
+        cout << endl;
+
+        menu(pilih);
+
+        if (pilih == 8) {
+            looping = false;
+        }
+        else {
+            looping = true;
+        }
+    }
+}
